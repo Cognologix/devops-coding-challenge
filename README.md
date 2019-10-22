@@ -10,7 +10,7 @@ The goal of this exercise is to access your familiarity with DevOps concepts, to
 - Clone this repo and create your branch for implementing the solution and upon completion push the Branch to remote
 - Complete the challenge within 5 days, mention time spent in hours explicitly took for solving the challenge
 - Your solution should be clean, readable, maintainable and implemented with emphasize on DevOps methodologies
-- Your are free to use the programming language, tools and cloud platform of your choice
+- You are free to use the programming language, tools and cloud platform of your choice
 - Provide a description, execution steps and testing steps in plain text file (EXECUTION-STEPS.txt)
 - We are absolutely not looking for completion or perfection, we expect trade-offs to be made
 - Submit all the codebase, diagrams and documents
