@@ -18,7 +18,8 @@ The goal of this exercise is to access your familiarity with DevOps concepts, to
 - Bonus points: For the solutions built with out of box approach
 
 # Prerequisites
-You might need an AWS/Azure/GCP account. Create one if you do not own one already. You can use free-tier resources for this test.
+1. You need a github account to push your branch (submit your solution) to remote.
+2. You might need an AWS/Azure/GCP account. Create one if you do not own one already. You can use free-tier resources for this test.
 
 # Challenges
 Full Stack Engineer - DevOps/Cloud  (junior)
