@@ -1,15 +1,15 @@
 ### About
 This is the node-todo Ansible role to perform deployment of "https://github.com/scotch-io/node-todo.git"
 
-### Recomended Os platform 
+### Recommended Os platform
 - Ubuntu
 
 ### Requirements
-- Ansible should be install on your workstation. Recomended Ansible version 2.9.9. 
+- Ansible should be installed on your workstation. Recommended Ansible version 2.9.9.
 - Ansible should have ssh access to inventory hosts over 22 port.
-- Add your host in to inventory file. (i.e test_hosts)  
+- Add your host/hosts to the inventory file. (i.e test_hosts)
 - Need to setup role variables in "node-todo/vars/main.yml" files.
-  Eg:- if you want to setup nodeuser for MongoDB you need to set variable in abovementioned file. 
+  Eg:- if you want to setup nodeuser for MongoDB you need to set the variables in the above-mentioned file.
     ( Nodeuser_And_Hostname: "vaibhav@mongo.onmodulus.net" )
 
 ### How to test (i.e dry run of Ansible job)
