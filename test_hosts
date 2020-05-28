@@ -1,0 +1,3 @@
+#Ansible inventory file 
+[test]
+myssh        ansible_port=22     ansible_user=root ansible_host=192.168.64.1 ansible_ssh_common_args='-o StrictHostKeyChecking=no'

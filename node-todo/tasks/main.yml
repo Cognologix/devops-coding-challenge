@@ -1,0 +1,47 @@
+---
+# tasks file for node-todo
+
+- name: Install required pacakges
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+   - build-essential
+   - curl
+   - git
+
+- name: Install pm2 to run our node server
+  npm: name=pm2 global=yes production=yes
+
+- name: Execute script for latest nodejs installation
+  shell: curl -sL https://deb.nodesource.com/setup_{{ Node_Version }}.x | bash -
+
+- name: Install required pacakges 
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+   - nodejs
+
+- name: Git clone nodetodo repo
+  git:
+    repo: 'https://github.com/scotch-io/node-todo.git'
+    dest: /nodetodo
+    force: yes
+  register: git_completed
+
+
+- name: Install packages based on package.json 
+  npm:
+    path: /nodetodo
+    state: present
+  register: npm_completed 
+  when: git_completed.changed 
+
+
+- name: Putting Mongo DB config File
+  template:
+    src: database.j2
+    dest: /nodetodo/config/database.js    
+
+
+- name: Start nodetodo app using pm2 
+  command: pm2 start /nodetodo/server.js 
+  ignore_errors: yes
+  when: npm_completed.changed

@@ -1,0 +1,7 @@
+---
+# vars file for node-todo
+Nodeuser_And_Hostname: "vaibhav@mongo.onmodulus.net"
+Database_Name: vaibhavmeanstacktutorials
+Node_Version: 14
+
+
