@@ -6,14 +6,27 @@ This is the node-todo Ansible role to perform deployment of "https://github.com/
 
 ### Requirements
 - Ansible should be install on your workstation. Recomended Ansible version 2.9.9. 
-- Ansible should have ssh access to inventory hosts over 22 port.
-- Add your host in to inventory file. (i.e test_hosts)  
-- Need to setup role variables in "node-todo/vars/main.yml" files.
-  Eg:- if you want to setup nodeuser for MongoDB you need to set variable in abovementioned file. 
-    ( Nodeuser_And_Hostname: "vaibhav@mongo.onmodulus.net" )
+- AWS programatic access (i.e $HOME/.aws/credentials ) needs to be set.
+- Phthon 3.x 
+- boto3 ( # pip3 install boto3)
+
+###:- There are two Ansible roles 
+    1) create-ec2-node-todo :- To create Ec2 infra for node-todo deployment 
+       :- Need to setup role variables in "create-ec2-node-todo/vars/main.yml" files.
+       (Note: this job also create inventory for "node-todo" role)
+    
+    2) node-todo:- To do the configuration part of the node-todo deployment
+       :- Need to setup role variables in "node-todo/vars/main.yml" files.
+       Eg:- if you want to setup nodeuser for MongoDB you need to set variable in abovementioned file.
+       ( Nodeuser_And_Hostname: "vaibhav@mongo.onmodulus.net" )
 
 ### How to test (i.e dry run of Ansible job)
-- #ansible-playbook -i test_hosts --check install-node-todo.yaml
+- # ansible-playbook --check create-ec2.yaml  
+- # ansible-playbook -i node-todo-inventory.txt  --check install-node-todo.yaml
 
 ### How to execute
-- #ansible-playbook -i test_hosts install-node-todo.yaml
+   ##:-First Create infra using "create-ec2-node-todo" role
+     - # ansible-playbook create-ec2.yaml
+  
+   ##:- Do the deploymnet of node-todp app using "node-todo" role
+     - #ansible-playbook -i test_hosts install-node-todo.yaml

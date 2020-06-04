@@ -8,16 +8,20 @@
    - curl
    - git
 
-- name: Install pm2 to run our node server
-  npm: name=pm2 global=yes production=yes
+#- name: Install pm2 to run our node server
+#  npm: name=pm2 global=yes production=yes
 
 - name: Execute script for latest nodejs installation
-  shell: curl -sL https://deb.nodesource.com/setup_{{ Node_Version }}.x | bash -
+  shell: curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 - name: Install required pacakges 
   apt: name={{ item }} state=present update_cache=yes
   with_items:
    - nodejs
+
+
+- name: Install pm2 to run our node server
+  npm: name=pm2 global=yes production=yes
 
 - name: Git clone nodetodo repo
   git:

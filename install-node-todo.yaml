@@ -1,5 +1,9 @@
-#This is the main ansible playbook
-- hosts: test
-  remote_user: root
+---
+- hosts: node-to-do
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
   roles:
     - node-todo
+...

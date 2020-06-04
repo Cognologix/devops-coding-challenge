@@ -1,0 +1,8 @@
+
+
+- name: Create Ec2 for node-todo 
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - create-ec2-node-todo

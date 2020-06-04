@@ -1,0 +1,15 @@
+---
+# vars file for create-ec2-node-todo
+region_name: ap-south-1
+ec2_instance_type: t2.micro
+ec2_ami: ami-01b8d0884f38e37b4  # Ubuntu 16.04 LTS
+ec2_keypair: node-to-do-key      # EC2 key file name
+vpc_id_name: vpc-d5d0ccbd
+ec2_sg_name: node-todo-ec2-sg-name
+ec2_sg_description: 'node-todo sg with rule descriptions'
+ec2_count: 1  # Required no of servers
+ec2_instance_tags: node-to-do
+vpc_subnet_id_name: subnet-a61a1fce
+trusted_ip: 103.86.183.88/32
+ec2_ansible_user: ubuntu
+

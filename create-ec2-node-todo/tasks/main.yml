@@ -1,0 +1,91 @@
+---
+# tasks file for create-ec2-node-todo
+
+       - name: Create a keypair
+         ec2_key:
+            name: "{{ ec2_keypair }}"
+            region: "{{ region_name }}"
+         register: ec2_key_result
+
+       - name: Save private key
+         copy: content="{{ ec2_key_result.key.private_key }}" dest="./{{ ec2_keypair }}.pem" mode=0600
+         when: ec2_key_result.changed
+
+       - name: Create a security group for node-todo
+         ec2_group:
+          name: "{{ ec2_sg_name }}"
+          description: "{{ ec2_sg_description }}"
+          vpc_id: "{{ vpc_id_name }}"
+          region: "{{ region_name }}"
+          rules:
+            - proto: tcp
+              from_port: 8080
+              to_port: 8080
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: "{{ trusted_ip }}"
+              rule_desc: allow all on port 8080
+
+       - name: Create a Ec2
+         ec2:
+           key_name: "{{ ec2_keypair }}"
+           group: "{{ ec2_sg_name }}"
+           instance_type: "{{ ec2_instance_type }}"
+           region: "{{ region_name }}"
+           zone: ap-south-1a   # t2.micro is available
+           image: "{{ ec2_ami }}"
+           wait: yes
+           wait_timeout: 500
+           count: "{{ ec2_count }}"
+           instance_tags:
+              Application: "{{ ec2_instance_tags }}"
+           vpc_subnet_id: "{{ vpc_subnet_id_name }}"
+           assign_public_ip: yes
+         register: ec2
+
+#       - debug: var=ec2
+
+       - name: allocating elastic IP and Associating it.
+         ec2_eip:
+           in_vpc: yes
+           reuse_existing_ip_allowed: yes
+           state: present
+           region: "{{ region_name }}"
+           instance_id: "{{ ec2.instance_ids[0] }}"
+         register: elastic_ip
+
+       - name: create inventory
+         copy:
+            dest: "./node-todo-inventory.txt"
+            content: |
+             [node-to-do:vars]
+             ansible_ssh_private_key_file =./{{ ec2_keypair }}.pem
+             [node-to-do]
+             node-to-do ansible_port=22     ansible_user="{{ec2_ansible_user}}" ansible_host="{{ elastic_ip.public_ip }}" ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+       - name: Wait for ssh to come up
+         wait_for:
+          host: "{{ elastic_ip.public_ip }}"
+          port: 22
+          timeout: 300
+          state: started
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
