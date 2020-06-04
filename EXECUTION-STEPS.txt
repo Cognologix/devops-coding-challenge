@@ -1,7 +1,7 @@
 ### About
 This is the node-todo Ansible role to perform deployment of "https://github.com/scotch-io/node-todo.git"
 
-### Recomended Os platform 
+### Recommended Os platform
 - Ubuntu
 
 ### Requirements
